@@ -158,6 +158,36 @@ lib/
 
 ---
 
+## Troubleshooting
+
+### macOS: library blocked by system policy
+
+macOS Gatekeeper will block the SDK library if it still carries the quarantine
+extended attribute set when the archive was downloaded, or if its code signature
+is not valid for the current process.
+
+`install_sdk.sh` handles this automatically. If you installed the library
+manually, or encounter the error after the fact, run these two commands:
+
+```bash
+# Remove the quarantine attribute
+xattr -cr lib/mac_arm64/libEFWFilter.dylib        # Apple Silicon
+xattr -cr lib/mac_x64/libEFWFilter.dylib          # Intel
+
+# Apply an ad-hoc code signature
+codesign --force --deep --sign - lib/mac_arm64/libEFWFilter.dylib   # Apple Silicon
+codesign --force --deep --sign - lib/mac_x64/libEFWFilter.dylib     # Intel
+```
+
+The error presenting as this issue looks like:
+
+```
+OSError: dlopen(...libEFWFilter.dylib): code signature not valid for use
+in process: library load disallowed by system policy
+```
+
+---
+
 ## SDK Licence
 
 The ZWO EFW SDK is distributed under an MIT-style licence.

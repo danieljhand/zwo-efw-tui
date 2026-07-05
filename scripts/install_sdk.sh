@@ -97,8 +97,24 @@ fi
 DEST_DIR="$PROJECT_DIR/lib/$SRC_DIR"
 mkdir -p "$DEST_DIR"
 cp "$SRC" "$DEST_DIR/libEFWFilter.dylib"
+echo "✓  Copied: $DEST_DIR/libEFWFilter.dylib"
 
-echo "✓  SDK library installed to: $DEST_DIR/libEFWFilter.dylib"
+# ---------------------------------------------------------------------------
+# macOS Gatekeeper — remove quarantine and apply an ad-hoc signature
+#
+# Libraries extracted from a downloaded archive carry a quarantine extended
+# attribute that causes macOS to block them at load time. Stripping it and
+# re-signing with an ad-hoc identity (-) allows Python's ctypes to load the
+# library without needing a Developer ID certificate.
+# ---------------------------------------------------------------------------
+
+echo "  Removing quarantine attribute ..."
+xattr -cr "$DEST_DIR/libEFWFilter.dylib"
+
+echo "  Applying ad-hoc code signature ..."
+codesign --force --deep --sign - "$DEST_DIR/libEFWFilter.dylib"
+
+echo "✓  Library ready: $DEST_DIR/libEFWFilter.dylib"
 echo ""
 echo "Next: install Python dependencies."
 echo "  python3 -m venv env"
