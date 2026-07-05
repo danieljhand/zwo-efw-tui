@@ -2,6 +2,25 @@
 
 A terminal UI for controlling ZWO EFW electronic filter wheels on macOS.
 
+```
+╭─────────────────────────────────────────────────────────────╮
+│ ZWO Filter Wheel Controller  EFW                            │
+│ Slots: 7  |  SDK: 1.8.4  |  Firmware: 3.5.2                │
+│ Slot 3 — SII 7nm                                           │
+│ ████████░░░░░░░░░░░░  3/7                                  │
+│ Filters:                                                    │
+│ 1  H Alpha 7nm        2  OIII 7nm                          │
+│ 3  SII 7nm            4  Luminance                         │
+│ 5  Red                6  Green                             │
+│ 7  Blue                                                     │
+│ 1–7 Move to slot  |  s Save config  |  r Reload  |  q Quit │
+│ ✓  Moved to Slot 3.                                        │
+╰─────────────────────────────────────────────────────────────╯
+```
+
+The current slot is highlighted in the filter list. Status messages
+appear in green; errors in red.
+
 ---
 
 ## Platform Support
