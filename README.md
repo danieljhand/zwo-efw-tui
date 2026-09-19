@@ -3,23 +3,40 @@
 A terminal UI for controlling ZWO EFW electronic filter wheels on macOS.
 
 ```
-╭─────────────────────────────────────────────────────────────╮
-│ ZWO Filter Wheel Controller  EFW                            │
-│ Slots: 7  |  SDK: 1.8.4  |  Firmware: 3.5.2                 │
-│ Slot 3 — SII 7nm                                            │
-│ ████████░░░░░░░░░░░░  3/7                                   │
-│ Filters:                                                    │
-│ 1  H Alpha 7nm        2  OIII 7nm                           │
-│ 3  SII 7nm            4  Luminance                          │
-│ 5  Red                6  Green                              │
-│ 7  Blue                                                     │
-│ 1–7 Move to slot  |  s Save config  |  r Reload  |  q Quit  │
-│ ✓  Moved to Slot 3.                                         │
-╰─────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────╮
+│ ZWO Filter Wheel Controller  EFW                           │
+│ Slots: 7  |  SDK: 1.8.4  |  Firmware: 3.5.2                │
+│ Slot 3 — SII 7nm                                           │
+│ ████████░░░░░░░░░░░░  3/7                                  │
+│ Filters:                                                   │
+│ 1  H Alpha ~656 nm (7 nm)   2  OIII ~500 nm (7 nm)         │
+│ 3  SII ~672 nm (7 nm)       4  Red ~600–700 nm             │
+│ 5  Green ~490–580 nm        6  Blue ~390–510 nm            │
+│ 7  Luminance ~390–700 nm                                   │
+│ 1–7 Move to slot  |  s Save config  |  r Reload  |  q Quit │
+│ ✓  Moved to Slot 3.                                        │
+╰────────────────────────────────────────────────────────────╯
 ```
 
 The current slot is highlighted in the filter list. Status messages
 appear in green; errors in red.
+
+---
+
+## Filter Passbands
+
+Slots 4–7 use the ZWO LRGB filter set, while slots 1–3 are narrowband line
+filters. Indicative passband ranges and bandpass widths (FWHM) are:
+
+| Filter | Passband Range (Wavelengths) | Bandpass Width (FWHM) | Key Optical Features |
+|---|---|---|---|
+| H-alpha (Hα) | ~656 nm (centre) | 7 nm | Hα hydrogen recombination line. |
+| OIII (OIII) | ~500 nm (centre) | 7 nm | Doubly-ionised oxygen emission lines (496 nm / 501 nm). |
+| SII (SII) | ~672 nm (centre) | 7 nm | Singly-ionised sulphur emission lines (672 nm). |
+| Red (R) | ~600 nm – 700 nm | ~100 nm | Passes both H-alpha (656 nm) and SII (672 nm) lines. |
+| Green (G) | ~490 nm – 580 nm | ~90 nm | Overlaps slightly with Blue to capture the OIII emission lines (496 nm and 501 nm) naturally. |
+| Blue (B) | ~390 nm – 510 nm | ~120 nm | Wide passband reaching down to near-UV (~380/390 nm), causing slight overlap with Green. |
+| Luminance (L) | ~390 nm – 700 nm | ~310 nm | Acts as a complete UV/IR cut filter across the visible spectrum. |
 
 ---
 
@@ -141,10 +158,10 @@ Filter names are stored in `filters.json` in the project directory:
   "1": "H Alpha 7nm",
   "2": "OIII 7nm",
   "3": "SII 7nm",
-  "4": "Luminance",
-  "5": "Red",
-  "6": "Green",
-  "7": "Blue"
+  "4": "Red",
+  "5": "Green",
+  "6": "Blue",
+  "7": "Luminance"
 }
 ```
 
